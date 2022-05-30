@@ -684,3 +684,5 @@ readme_directory = /usr/share/doc/postfix/readme
 inet_protocols = ipv4
 shlib_directory = /usr/lib/postfix
 meta_directory = /etc/postfix
+
+maillog_file = /dev/stdout

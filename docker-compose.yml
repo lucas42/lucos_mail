@@ -1,0 +1,8 @@
+version: '3'
+services:
+  mail_smtp:
+    build: .
+    container_name: lucos_mail_smtp
+    ports:
+      - "25:25"
+    image: lucas42/lucos_mail_smtp

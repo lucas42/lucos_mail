@@ -6,3 +6,10 @@ services:
     ports:
       - "25:25"
     image: lucas42/lucos_mail_smtp
+    volumes:
+      - "letsencrypt:/etc/letsencrypt"
+
+volumes:
+  letsencrypt:
+    external: true
+    name: lucos_router_letsencrypt

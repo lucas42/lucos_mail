@@ -687,3 +687,44 @@ shlib_directory = /usr/lib/postfix
 meta_directory = /etc/postfix
 
 maillog_file = /dev/stdout
+
+#### SASL ####
+## specify SASL type ##
+smtpd_sasl_type = dovecot
+
+## path to the SASL socket relative to postfix spool directory i.e. /var/spool/postfix ##
+smtpd_sasl_path = private/auth
+
+## postfix appends the domain name for SASL logins that do not have the domain part ##
+smtpd_sasl_local_domain = l42.eu
+
+## SASL default policy ##
+smtpd_sasl_security_options = noanonymous
+
+## for legacy application compatibility ##
+broken_sasl_auth_clients = yes
+
+## enable SMTP auth ##
+smtpd_sasl_auth_enable = yes
+
+## smtp checks ##
+## these checks are based on first match, so sequence is important ##
+smtpd_recipient_restrictions = permit_sasl_authenticated, reject_unauth_destination
+
+#### SSL/TLS parameters ####
+
+# Certs mounted from lucos_router docker volume
+smtpd_tls_cert_file = /etc/letsencrypt/live/mail.l42.eu/fullchain.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/mail.l42.eu/privkey.pem
+smtpd_use_tls=yes
+smtp_tls_security_level = encrypt
+smtpd_tls_received_header = yes
+smtpd_tls_auth_only = no
+
+## loglevel 3 or 4 can be used during troubleshooting ##
+smtpd_tls_loglevel = 1
+
+## server will announce STARTTLS ##
+smtp_tls_note_starttls_offer = yes
+
+smtpd_tls_session_cache_timeout = 3600s

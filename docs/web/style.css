@@ -41,6 +41,10 @@ lucos-navbar{
 #config {
 	background-color: #E0BBFF;
 }
+#error {
+	background-color: #ffBBe0;
+	flex: none;
+}
 blockquote {
 	font-family: monospace;
 	font-size: 19px;

@@ -1,13 +1,19 @@
 version: '3'
 services:
   mail_smtp:
-    build: .
+    build: postfix
     container_name: lucos_mail_smtp
     ports:
       - "25:25"
     image: lucas42/lucos_mail_smtp
     volumes:
       - "letsencrypt:/etc/letsencrypt"
+  mail_docs:
+    build: docs
+    container_name: lucos_mail_docs
+    ports:
+      - "8022:80"
+    image: lucas42/lucos_mail_docs
 
 volumes:
   letsencrypt:

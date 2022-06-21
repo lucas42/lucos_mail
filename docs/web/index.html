@@ -1,0 +1,30 @@
+<!DOCTYPE html> 
+<html> 
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="apple-touch-icon" href="/logo.png"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<link rel="icon" href="/logo.png" />
+		<title>LucOS Mail</title>
+		<link href="/style.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<lucos-navbar>LucOS Mail</lucos-navbar>
+		<div id="intro" class="card">
+			<h2>About</h2>
+			Currently this mail server is only for automated outbound emails.  Connect over SMTP, using the details in the config section below.
+		</div>
+		<div id="config" class="card">
+			<h2>SMTP Config</h2>
+			<blockquote>
+				SMTP_SERVER=​mail.l42.eu
+				PORT=​25
+				USERNAME=​&lt;servicename&gt;@l42.eu
+				PASSWORD=​******
+			</blockquote>
+			
+		</div>
+		<script src="/lucos_navbar.js" type="text/javascript"></script>
+	</body>
+</html>

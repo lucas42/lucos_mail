@@ -1,0 +1,13 @@
+{
+  "system": "lucos_mail_docs",
+  "checks": {
+    "apache": {
+      "techDetail": "Apache serving traffic",
+      "ok": true
+    }
+  },
+  "ci": {
+    "circle": "gh/lucas42/lucos_mail"
+  },
+  "metrics": {}
+}

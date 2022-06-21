@@ -1,0 +1,50 @@
+body {
+
+	/** Credit to  Randy Merrill https://projects.verou.me/css3patterns/#cicada-stripes **/
+	background-color: #026873;
+	background-image: linear-gradient(90deg, rgba(255,255,255,.07) 50%, transparent 50%),
+	linear-gradient(90deg, rgba(255,255,255,.13) 50%, transparent 50%),
+	linear-gradient(90deg, transparent 50%, rgba(255,255,255,.17) 50%),
+	linear-gradient(90deg, transparent 50%, rgba(255,255,255,.19) 50%);
+	background-size: 13px, 29px, 37px, 53px;
+
+	padding:  2em;
+}
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+body {
+	display: flex;
+    flex-direction: column;
+}
+.card {
+	padding: 1em;
+	box-shadow: rgb(0 0 0 / 75%) 15px 15px 3px;
+	margin: 15px 20px;
+	flex: 1;
+	max-width: 1000px;
+	align-self: center;
+	width: -webkit-fill-available;
+}
+.card h2 {
+	margin-top: 0;
+}
+lucos-navbar{
+	position: relative;
+}
+#intro {
+	background-color: #BBFFE0;
+}
+
+#config {
+	background-color: #E0BBFF;
+}
+blockquote {
+	font-family: monospace;
+	font-size: 19px;
+	line-height: 31px;
+	white-space: pre-line;
+	overflow-wrap: break-word;
+}

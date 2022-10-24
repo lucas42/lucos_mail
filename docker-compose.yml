@@ -8,12 +8,14 @@ services:
     image: lucas42/lucos_mail_smtp
     volumes:
       - "letsencrypt:/etc/letsencrypt"
+    restart: always
   mail_docs:
     build: docs
     container_name: lucos_mail_docs
     ports:
       - "8022:80"
     image: lucas42/lucos_mail_docs
+    restart: always
 
 volumes:
   letsencrypt:

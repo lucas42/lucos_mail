@@ -17,7 +17,7 @@ Ideally, each email-sending service should have its own user.  To add one, edit 
 ```
 <address>:<password_hash>
 ```
-Where `<address>` is the email address the service will send emails from and `<password_hash>` is the output of `doveadm pw -s SHA512-CRYPT`.  
+Where `<address>` is the email address the service will send emails from and `<password_hash>` is the output of `docker exec -it lucos_mail_smtp doveadm pw -s SHA512-CRYPT`.  
 Overall, it should look something like:
 ```
 test-send@l42.eu:{SHA512-CRYPT}$6$vQuXxgstiLqmzuZn$MUWOy7vHRbDf/WXcMH5KbxEHrBmt6/kytDfbTQYlDhF/zfK/uKZ.QCMo.TwF6cMkpOPy0KDX.XnIOXWEdl2nm/
@@ -25,5 +25,5 @@ test-send@l42.eu:{SHA512-CRYPT}$6$vQuXxgstiLqmzuZn$MUWOy7vHRbDf/WXcMH5KbxEHrBmt6
 
 ## Rotating a user's password
 
-Run `doveadm pw -s SHA512-CRYPT` and enter a new password to get the new hash.
+Run `docker exec -it lucos_mail_smtp doveadm pw -s SHA512-CRYPT` and enter a new password to get the new hash.
 Edit the `postfix/users` file, looking for the row corresponding to the user being rotated.  Replace everything after the colon with the new hash.

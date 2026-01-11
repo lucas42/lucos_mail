@@ -12,7 +12,7 @@ services:
     build: docs
     container_name: lucos_mail_docs
     ports:
-      - "8022:80"
+      - $PORT:80
     image: lucas42/lucos_mail_docs
     restart: always
 

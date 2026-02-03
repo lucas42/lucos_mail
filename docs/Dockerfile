@@ -1,4 +1,4 @@
-FROM lucas42/lucos_navbar:latest as navbar
+FROM lucas42/lucos_navbar:2.1.1 as navbar
 FROM httpd:2.4-alpine
 
 RUN echo "Include conf/vhost.conf" >> /usr/local/apache2/conf/httpd.conf

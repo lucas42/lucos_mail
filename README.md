@@ -2,7 +2,7 @@
 An SMTP server for sending emails from the lucOS ecosystem
 
 ## Dependencies
-* docker-compose
+* docker compose
 * [lucos_router](https://github.com/lucas42/lucos_router) running in the same docker environment - its TLS cert volume is used here, so the domain must have been included there too.
 
 ## Container setup

@@ -8,6 +8,12 @@ services:
     volumes:
       - "letsencrypt:/etc/letsencrypt"
     restart: always
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "25"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
   mail_docs:
     build: docs
     container_name: lucos_mail_docs
@@ -15,6 +21,12 @@ services:
       - $PORT:80
     image: lucas42/lucos_mail_docs
     restart: always
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:80/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
 
 volumes:
   letsencrypt:

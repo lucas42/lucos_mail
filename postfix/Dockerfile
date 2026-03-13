@@ -1,6 +1,6 @@
 FROM alpine:3.21.1
 
-RUN apk --update add postfix dovecot bash
+RUN apk --update add postfix dovecot bash busybox-extras
 
 WORKDIR /etc/postfix
 COPY config .

@@ -1,5 +1,7 @@
 FROM lucas42/lucos_navbar:2.1.1 as navbar
 FROM httpd:2.4-alpine
+ARG VERSION
+ENV VERSION=$VERSION
 
 RUN echo "Include conf/vhost.conf" >> /usr/local/apache2/conf/httpd.conf
 COPY vhost.conf /usr/local/apache2/conf/

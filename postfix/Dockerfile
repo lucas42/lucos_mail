@@ -1,4 +1,6 @@
 FROM alpine:3.21.1
+ARG VERSION
+ENV VERSION=$VERSION
 
 RUN apk --update add postfix dovecot bash busybox-extras
 

@@ -14,8 +14,19 @@ jobs:
             docker volume create lucos_router_letsencrypt
             docker run --rm -v lucos_router_letsencrypt:/etc/letsencrypt alpine sh -c 'apk add --quiet openssl && mkdir -p /etc/letsencrypt/live/mail.l42.eu && openssl req -x509 -newkey rsa:2048 -keyout /etc/letsencrypt/live/mail.l42.eu/privkey.pem -out /etc/letsencrypt/live/mail.l42.eu/fullchain.pem -days 1 -nodes -subj /CN=mail.l42.eu 2>/dev/null'
       - run:
-          name: Build and start smtp container
-          command: docker compose up -d mail_smtp --build
+          name: Build smtp image
+          command: docker compose build mail_smtp
+      - run:
+          name: Start smtp container (no host port binding to avoid conflicts)
+          command: |
+            docker run -d --name lucos_mail_smtp \
+              -v lucos_router_letsencrypt:/etc/letsencrypt \
+              --health-cmd "nc -z 127.0.0.1 25" \
+              --health-interval 10s \
+              --health-timeout 5s \
+              --health-retries 3 \
+              --health-start-period 15s \
+              lucas42/lucos_mail_smtp:latest
       - run:
           name: Wait for smtp container to become healthy
           command: |
@@ -44,7 +55,7 @@ workflows:
       - lucos/build:
           serial-group: << pipeline.project.slug >>/build/<< pipeline.git.branch >>
       - lucos/deploy-avalon:
-          serial-group: << pipeline.project.slug >>/deploy-avalon
+          serial-group: deploy-avalon
           requires:
             - test
             - lucos/build

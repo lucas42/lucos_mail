@@ -22,6 +22,14 @@ updates:
       time: '07:00'
     allow:
       - dependency-type: all
+    ignore:
+      # TEMPORARY hold: alpine 3.22+ ships Dovecot 2.4, whose breaking config
+      # change (requires dovecot_config_version) crash-loops postfix and takes
+      # mail down (incident 2026-06-11). Holds at 3.21.x (patch bumps still flow).
+      # REMOVE this entry once the Dovecot 2.4 config migration lands — lucas42/lucos_mail#60.
+      - dependency-name: "alpine"
+        versions:
+          - ">= 3.22"
     groups:
       minor-and-patch:
         update-types:

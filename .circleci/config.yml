@@ -1,15 +1,63 @@
 version: 2.1
 orbs:
   lucos: lucos/deploy@0
+jobs:
+  test:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Create letsencrypt volume with self-signed certs for testing
+          command: |
+            docker volume create lucos_router_letsencrypt
+            docker run --rm -v lucos_router_letsencrypt:/etc/letsencrypt alpine sh -c 'apk add --quiet openssl && mkdir -p /etc/letsencrypt/live/mail.l42.eu && openssl req -x509 -newkey rsa:2048 -keyout /etc/letsencrypt/live/mail.l42.eu/privkey.pem -out /etc/letsencrypt/live/mail.l42.eu/fullchain.pem -days 1 -nodes -subj /CN=mail.l42.eu 2>/dev/null'
+      - run:
+          name: Build smtp image
+          command: docker compose build mail_smtp
+      - run:
+          name: Start smtp container (no host port binding to avoid conflicts)
+          command: |
+            docker run -d --name lucos_mail_smtp \
+              -v lucos_router_letsencrypt:/etc/letsencrypt \
+              --health-cmd "nc -z 127.0.0.1 25" \
+              --health-interval 10s \
+              --health-timeout 5s \
+              --health-retries 3 \
+              --health-start-period 15s \
+              lucas42/lucos_mail_smtp:latest
+      - run:
+          name: Wait for smtp container to become healthy
+          command: |
+            for i in $(seq 1 12); do
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' lucos_mail_smtp 2>/dev/null || echo "starting")
+              echo "Attempt $i: $STATUS"
+              if [ "$STATUS" = "healthy" ]; then
+                echo "SMTP container is healthy - port 25 is responding"
+                exit 0
+              fi
+              if [ "$STATUS" = "unhealthy" ]; then
+                echo "SMTP container is unhealthy"
+                docker logs lucos_mail_smtp
+                exit 1
+              fi
+              sleep 5
+            done
+            echo "SMTP container did not become healthy in time"
+            docker logs lucos_mail_smtp
+            exit 1
 workflows:
   version: 2
   build-deploy:
     jobs:
+      - test
       - lucos/build:
           serial-group: << pipeline.project.slug >>/build/<< pipeline.git.branch >>
       - lucos/deploy-avalon:
           serial-group: deploy-avalon
           requires:
+            - test
             - lucos/build
           filters:
             branches:

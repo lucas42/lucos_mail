@@ -1,4 +1,4 @@
-FROM lucas42/lucos_navbar:2.3.0 as navbar
+FROM lucas42/lucos_navbar:2.3.2 as navbar
 FROM httpd:2.4-alpine
 ARG VERSION
 ENV VERSION=$VERSION

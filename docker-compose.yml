@@ -7,6 +7,8 @@ services:
     image: lucas42/lucos_mail_smtp:${VERSION:-latest}
     volumes:
       - "letsencrypt:/etc/letsencrypt"
+    environment:
+      - DOVECOT_USERS_BASE64
     restart: always
     healthcheck:
       test: ["CMD", "nc", "-z", "127.0.0.1", "25"]

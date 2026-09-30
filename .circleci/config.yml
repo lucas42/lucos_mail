@@ -20,6 +20,7 @@ jobs:
           name: Start smtp container (no host port binding to avoid conflicts)
           command: |
             docker run -d --name lucos_mail_smtp \
+              -e DOVECOT_USERS_BASE64="$(echo 'ci-test@l42.eu:{PLAIN}ci-test' | base64 -w0)" \
               -v lucos_router_letsencrypt:/etc/letsencrypt \
               --health-cmd "nc -z 127.0.0.1 25" \
               --health-interval 10s \

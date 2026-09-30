@@ -9,7 +9,6 @@ COPY config .
 
 RUN rm -rf /etc/dovecot/conf.d
 COPY dovecot.conf /etc/dovecot/
-COPY users /etc/dovecot/users
 
 EXPOSE 25
 
